@@ -1,6 +1,6 @@
 import PreviewOfferCard from '../../components/preview-offer-card/preview-offer-card';
 import Header from '../../components/header/header';
-import LocationList from '../../components/location-tabs/location-list';
+import LocationList from '../../components/location-list/location-list';
 import Sort from '../../components/sort/sort';
 
 type MainProps = {

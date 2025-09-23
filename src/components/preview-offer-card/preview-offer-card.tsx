@@ -1,4 +1,3 @@
-
 function PreviewOfferCard(): JSX.Element {
   return (
     <article className="cities__card place-card">

@@ -1,4 +1,4 @@
-function Auth(): JSX.Element {
+function Login(): JSX.Element {
 
   return (
     <div className="page page--gray page--login">
@@ -43,4 +43,4 @@ function Auth(): JSX.Element {
   );
 }
 
-export default Auth;
+export default Login;

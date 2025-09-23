@@ -1,4 +1,4 @@
-import Main from '../pages/main/main-page';
+import Main from '../pages/main/main';
 
 type AppProps = {
   offersCount: number;

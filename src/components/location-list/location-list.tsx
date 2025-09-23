@@ -1,4 +1,4 @@
-import { cities } from '../../const';
+import { CITIES } from '../../const';
 
 function LocationList(): JSX.Element {
   return (
@@ -6,7 +6,7 @@ function LocationList(): JSX.Element {
     <section className="locations container">
       <ul className="locations__list tabs__list">
 
-        {cities.map((city) => (
+        {CITIES.map((city) => (
           <li className="locations__item" key={city}>
             <a className="locations__item-link tabs__item" href="#">
               <span>{city}</span>
