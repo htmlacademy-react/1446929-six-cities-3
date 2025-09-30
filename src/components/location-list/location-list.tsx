@@ -8,9 +8,7 @@ function LocationList(): JSX.Element {
 
         {CITIES.map((city) => (
           <li className="locations__item" key={city}>
-            <a className="locations__item-link tabs__item" href="#">
-              <span>{city}</span>
-            </a>
+            {city === 'Paris' ? (<a className="locations__item-link tabs__item tabs__item--active" href="#"><span>{city}</span></a>) : (<a className="locations__item-link tabs__item" href="#"><span>{city}</span></a>)}
           </li>
         ))}
 
