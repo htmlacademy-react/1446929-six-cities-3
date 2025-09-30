@@ -10,10 +10,11 @@ import PrivateRoute from '../components/private-route/private-route';
 
 type AppProps = {
   offersCount: number;
+  authorizationStatus: AuthorizationStatus;
 
 }
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offersCount, authorizationStatus }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -28,23 +29,23 @@ function App({ offersCount }: AppProps): JSX.Element {
 
           <Route path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute mustBeRender={authorizationStatus === AuthorizationStatus.Auth} >
                 <Favorite />
               </PrivateRoute>
             }
           />
 
-          <Route path={AppRoute.Offer} element={<Offer />}>
-            <Route path=':id' element={<Offer />} />
-          </Route>
+          <Route path={AppRoute.Offer}
+            element={<Offer />}
+          />
 
-          <Route path='*'
+          <Route path={AppRoute.NotFound}
             element={<PageNotFound />}
           />
 
         </Routes>
       </BrowserRouter >
-    </HelmetProvider>
+    </HelmetProvider >
 
   );
 
