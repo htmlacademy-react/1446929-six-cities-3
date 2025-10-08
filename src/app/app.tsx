@@ -7,20 +7,22 @@ import Favorite from '../pages/favorite/favorite';
 import Offer from '../pages/offer/offer';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
+import { OfferItems } from '../types/offer';
+
 
 type AppProps = {
   offersCount: number;
   authorizationStatus: AuthorizationStatus;
-
+  offers: OfferItems;
 }
 
-function App({ offersCount, authorizationStatus }: AppProps): JSX.Element {
+function App({ offersCount, authorizationStatus, offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main}
-            element={<Main offersCount={offersCount} />}
+            element={<Main offersCount={offersCount} offers={offers} />}
           />
 
           <Route path={AppRoute.Login}
