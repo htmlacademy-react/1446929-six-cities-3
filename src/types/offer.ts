@@ -16,13 +16,13 @@ type City = {
 }
 
 type OfferItem = {
-  id: string;
+  id?: string;
   title: string;
   type: string;
   price: number;
   previewImage: string;
-  city: City;
-  location: OfferLocation;
+  city?: City;
+  location?: OfferLocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

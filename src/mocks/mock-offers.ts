@@ -89,8 +89,8 @@ const MOCK_OFFERS: OfferItems = [
       longitude: 2.358499,
       zoom: 16
     },
-    isFavorite: false,
-    isPremium: false,
+    isFavorite: true,
+    isPremium: true,
     rating: 3.2
   }
 ];
