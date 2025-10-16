@@ -1,23 +1,26 @@
 import PreviewOfferCard from '../preview-offer-card/preview-offer-card';
 import { OfferItems } from '../../types/offer';
+import { useState } from 'react';
 
 type OffersListProps = {
   offers: OfferItems;
 }
 
 function OffersList({ offers }: OffersListProps): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState('');
+  console.log(activeOfferId);
+
+  const handleHoverIn = (id: string) => setActiveOfferId(id);
+  const handleHoverOut = () => setActiveOfferId('');
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
         <PreviewOfferCard
-          type={offer.type}
-          price={offer.price}
-          previewImage={offer.previewImage}
-          title={offer.title}
-          isPremium={offer.isPremium}
-          isFavorite={offer.isFavorite}
-          rating={offer.rating}
+          offer={offer}
           key={offer.id}
+          onHoverIn={() => handleHoverIn(offer.id)}
+          onHoverOut={handleHoverOut}
         />
       ))}
 

@@ -16,7 +16,7 @@ type City = {
 }
 
 type OfferItem = {
-  id?: string;
+  id: string;
   title: string;
   type: string;
   price: number;
@@ -27,6 +27,7 @@ type OfferItem = {
   isPremium: boolean;
   rating: number;
 }
+
 
 export type Offer = OfferItem;
 export type OfferItems = OfferItem[];
