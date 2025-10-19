@@ -21,7 +21,7 @@ type OfferItem = {
   type: string;
   price: number;
   previewImage: string;
-  city?: City;
+  city: City;
   location?: OfferLocation;
   isFavorite: boolean;
   isPremium: boolean;

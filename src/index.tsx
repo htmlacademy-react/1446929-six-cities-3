@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
     <App
       offersCount={Setting.OffersCount}
-      authorizationStatus={AuthorizationStatus.NoAuth}
+      authorizationStatus={AuthorizationStatus.Auth}
       offers={MOCK_OFFERS}
     />
   </React.StrictMode>

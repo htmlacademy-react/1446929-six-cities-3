@@ -3,7 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../const';
 import Main from '../pages/main/main';
 import Login from '../pages/login/login';
-import Favorite from '../pages/favorite/favorite';
+import Favorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
@@ -32,7 +32,7 @@ function App({ offersCount, authorizationStatus, offers }: AppProps): JSX.Elemen
           <Route path={AppRoute.Favorites}
             element={
               <PrivateRoute mustBeRender={authorizationStatus === AuthorizationStatus.Auth} >
-                <Favorite />
+                <Favorites offers={offers} />
               </PrivateRoute>
             }
           />

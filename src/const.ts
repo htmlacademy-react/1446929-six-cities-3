@@ -2,6 +2,8 @@ export const Setting = {
   OffersCount: 10,
 };
 
+export const RATING_STAR_QTY = 5;
+
 export const CITIES: string[] = [
   'Paris',
   'Cologne',
