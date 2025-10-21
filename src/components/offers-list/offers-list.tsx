@@ -8,7 +8,6 @@ type OffersListProps = {
 
 function OffersList({ offers }: OffersListProps): JSX.Element {
   const [activeOfferId, setActiveOfferId] = useState('');
-  console.log(activeOfferId);
 
   const handleHoverIn = (id: string) => setActiveOfferId(id);
   const handleHoverOut = () => setActiveOfferId('');
