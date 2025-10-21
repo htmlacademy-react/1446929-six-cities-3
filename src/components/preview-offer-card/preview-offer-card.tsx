@@ -1,29 +1,33 @@
 import { Offer } from '../../types/offer';
 import { RATING_STAR_QTY } from '../../const';
+import { Link } from 'react-router-dom';
 
 type PreviewOfferCardProps = {
   offer: Offer;
-  onHoverIn: () => void;
-  onHoverOut: () => void;
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
+  viewMode: string;
+  viewWidth: number;
+  viewHeight: number;
 }
 
 function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
-  const { offer, onHoverIn, onHoverOut } = props;
+  const { offer, onHoverIn, onHoverOut, viewMode, viewWidth, viewHeight } = props;
 
   const { rating, previewImage, title, isPremium, isFavorite, price, type } = offer;
 
   const ratingToInteger = Math.round(rating);
 
   return (
-    <article className='cities__card place-card' onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
+    <article className={`${viewMode}__card place-card`} onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title} />
-        </a>
+      <div className={`${viewMode}__image-wrapper place-card__image-wrapper`}>
+        <Link to='/offer/:id'>
+          <img className="place-card__image" src={previewImage} width={viewWidth} height={viewHeight} alt={title} />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -46,7 +50,7 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to='/offer/:id'>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>

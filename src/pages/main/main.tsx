@@ -6,11 +6,10 @@ import OffersList from '../../components/offers-list/offers-list';
 import { OfferItems } from '../../types/offer';
 
 type MainProps = {
-  offersCount: number;
   offers: OfferItems;
 }
 
-function Main({ offersCount, offers }: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -29,7 +28,7 @@ function Main({ offersCount, offers }: MainProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <Sort />
               <OffersList offers={offers} />
 

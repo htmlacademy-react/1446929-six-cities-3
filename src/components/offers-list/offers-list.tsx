@@ -15,14 +15,19 @@ function OffersList({ offers }: OffersListProps): JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
-        <PreviewOfferCard
-          offer={offer}
-          key={offer.id}
-          onHoverIn={() => handleHoverIn(offer.id)}
-          onHoverOut={handleHoverOut}
-        />
-      ))}
+      {offers &&
+        offers.length > 0 &&
+        offers.map((offer) => (
+          <PreviewOfferCard
+            offer={offer}
+            key={offer.id}
+            onHoverIn={() => handleHoverIn(offer.id)}
+            onHoverOut={handleHoverOut}
+            viewMode='cities'
+            viewWidth={260}
+            viewHeight={200}
+          />
+        ))}
 
     </div>
   );

@@ -1,4 +1,5 @@
 import { CITIES } from '../../const';
+import { Link } from 'react-router-dom';
 
 function LocationList(): JSX.Element {
   return (
@@ -8,7 +9,7 @@ function LocationList(): JSX.Element {
 
         {CITIES.map((city) => (
           <li className="locations__item" key={city}>
-            {city === 'Paris' ? (<a className="locations__item-link tabs__item tabs__item--active" href="#"><span>{city}</span></a>) : (<a className="locations__item-link tabs__item" href="#"><span>{city}</span></a>)}
+            {city === 'Paris' ? (<Link className="locations__item-link tabs__item tabs__item--active" to="#"><span>{city}</span></Link>) : (<Link className="locations__item-link tabs__item" to="#"><span>{city}</span></Link>)}
           </li>
         ))}
 

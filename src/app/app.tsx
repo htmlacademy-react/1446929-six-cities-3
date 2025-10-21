@@ -11,18 +11,17 @@ import { OfferItems } from '../types/offer';
 
 
 type AppProps = {
-  offersCount: number;
   authorizationStatus: AuthorizationStatus;
   offers: OfferItems;
 }
 
-function App({ offersCount, authorizationStatus, offers }: AppProps): JSX.Element {
+function App({ authorizationStatus, offers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main}
-            element={<Main offersCount={offersCount} offers={offers} />}
+            element={<Main offers={offers} />}
           />
 
           <Route path={AppRoute.Login}
