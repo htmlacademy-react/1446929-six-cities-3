@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { OfferItems } from '../../types/offer';
 import { Offer } from '../../types/offer';
+import { AppRoute } from '../../const';
 import PreviewOfferCard from '../../components/preview-offer-card/preview-offer-card';
 import Logo from '../../components/logo/logo';
 
@@ -88,7 +89,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <Link className="footer__logo-link" to='/'>
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
         </Link>
       </footer>
