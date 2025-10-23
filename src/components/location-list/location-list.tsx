@@ -1,14 +1,13 @@
 import { CITIES } from '../../const';
 import { Link } from 'react-router-dom';
-import { OfferItems } from '../../types/offer';
-import { useState } from 'react';
+
 
 type LocationListProps = {
-  offers: OfferItems;
+  activeCity: string;
+  onCityChange: (city: string) => void;
 }
 
-function LocationList({ offers }: LocationListProps): JSX.Element {
-  const [activeCity, setActiveCity] = useState(offers[0]?.city.name || CITIES[0]);
+function LocationList({ activeCity, onCityChange }: LocationListProps): JSX.Element {
 
   return (
 
@@ -22,7 +21,7 @@ function LocationList({ offers }: LocationListProps): JSX.Element {
               to="#"
               onClick={(evt) => {
                 evt.preventDefault();
-                setActiveCity(city);
+                onCityChange(city);
               }}
             >
               <span>{city}</span>
