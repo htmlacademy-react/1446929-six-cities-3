@@ -1,7 +1,15 @@
 import { CITIES } from '../../const';
 import { Link } from 'react-router-dom';
+import { OfferItems } from '../../types/offer';
+import { useState } from 'react';
 
-function LocationList(): JSX.Element {
+type LocationListProps = {
+  offers: OfferItems;
+}
+
+function LocationList({ offers }: LocationListProps): JSX.Element {
+  const [activeCity, setActiveCity] = useState(offers[0]?.city.name || CITIES[0]);
+
   return (
 
     <section className="locations container">
@@ -9,13 +17,21 @@ function LocationList(): JSX.Element {
 
         {CITIES.map((city) => (
           <li className="locations__item" key={city}>
-            {city === 'Paris' ? (<Link className="locations__item-link tabs__item tabs__item--active" to="#"><span>{city}</span></Link>) : (<Link className="locations__item-link tabs__item" to="#"><span>{city}</span></Link>)}
+            <Link
+              className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : ''}`}
+              to="#"
+              onClick={(evt) => {
+                evt.preventDefault();
+                setActiveCity(city);
+              }}
+            >
+              <span>{city}</span>
+            </Link>
           </li>
         ))}
 
       </ul>
-    </section>
-
+    </section >
   );
 }
 
