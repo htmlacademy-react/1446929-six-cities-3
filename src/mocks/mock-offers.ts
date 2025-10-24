@@ -92,7 +92,76 @@ const MOCK_OFFERS: OfferItems = [
     isFavorite: true,
     isPremium: true,
     rating: 3.2
-  }
+  },
+  {
+    id: '733db4d6-1533-4762-a41e-4976d028f198',
+    title: 'Perfectly located Castro',
+    type: 'room',
+    price: 128,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2.2
+  },
+  {
+    id: '4640a6ab-62ab-4b2b-a92e-93cb4e7aa302',
+    title: 'Wood and stone place',
+    type: 'apartment',
+    price: 385,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/12.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.834610000000005,
+      longitude: 2.335499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: false,
+    rating: 1.1
+  },
+  {
+    id: 'd712b299-1616-4f41-b048-dc9f36f9860a',
+    title: 'Amazing and Extremely Central Flat',
+    type: 'house',
+    price: 735,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/14.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.85761,
+      longitude: 2.358499,
+      zoom: 16
+    },
+    isFavorite: true,
+    isPremium: true,
+    rating: 4
+  },
 ];
 
 export { MOCK_OFFERS };

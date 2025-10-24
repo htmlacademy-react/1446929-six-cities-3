@@ -13,7 +13,10 @@ type MainProps = {
 }
 
 function Main({ offers }: MainProps): JSX.Element {
-  const [activeCity, setActiveCity] = useState(offers[0].city.name || CITIES[0]);
+
+  const defaultCity = CITIES[0];
+
+  const [activeCity, setActiveCity] = useState(defaultCity);
 
   const [activeOfferId, setActiveOfferId] = useState('');
 
