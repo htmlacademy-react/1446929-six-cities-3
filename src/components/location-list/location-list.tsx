@@ -1,7 +1,14 @@
 import { CITIES } from '../../const';
 import { Link } from 'react-router-dom';
 
-function LocationList(): JSX.Element {
+
+type LocationListProps = {
+  activeCity: string;
+  onCityChange: (city: string) => void;
+}
+
+function LocationList({ activeCity, onCityChange }: LocationListProps): JSX.Element {
+
   return (
 
     <section className="locations container">
@@ -9,13 +16,21 @@ function LocationList(): JSX.Element {
 
         {CITIES.map((city) => (
           <li className="locations__item" key={city}>
-            {city === 'Paris' ? (<Link className="locations__item-link tabs__item tabs__item--active" to="#"><span>{city}</span></Link>) : (<Link className="locations__item-link tabs__item" to="#"><span>{city}</span></Link>)}
+            <Link
+              className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : ''}`}
+              to="#"
+              onClick={(evt) => {
+                evt.preventDefault();
+                onCityChange(city);
+              }}
+            >
+              <span>{city}</span>
+            </Link>
           </li>
         ))}
 
       </ul>
-    </section>
-
+    </section >
   );
 }
 

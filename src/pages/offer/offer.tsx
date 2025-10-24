@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 
@@ -18,7 +19,7 @@ function Offer(): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to='/favorites'>
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com

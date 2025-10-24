@@ -2,6 +2,7 @@ import { Offer } from '../../types/offer';
 import { RATING_STAR_QTY } from '../../const';
 import { Link } from 'react-router-dom';
 
+
 type PreviewOfferCardProps = {
   offer: Offer;
   onHoverIn?: () => void;
@@ -25,7 +26,7 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className={`${viewMode}__image-wrapper place-card__image-wrapper`}>
-        <Link to='/offer/:id'>
+        <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={previewImage} width={viewWidth} height={viewHeight} alt={title} />
         </Link>
       </div>
@@ -50,7 +51,7 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to='/offer/:id'>{title}</Link>
+          <Link to={`/offer/${offer.id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>

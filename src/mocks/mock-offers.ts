@@ -2,27 +2,27 @@ import { OfferItems } from '../types/offer';
 
 const MOCK_OFFERS: OfferItems = [
   {
-    id: '1b200217-5945-4428-8d00-05ffc730521b',
-    title: 'Canal View Prinsengracht',
-    type: 'hotel',
-    price: 351,
-    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/18.jpg',
+    id: '293fb774-579f-4c50-a3e2-5b748e0937e4',
+    title: 'The house among olive',
+    type: 'house',
+    price: 306,
+    previewImage: 'https://15.design.htmlacademy.pro/static/hotel/13.jpg',
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     isFavorite: false,
-    isPremium: false,
-    rating: 3.2
+    isPremium: true,
+    rating: 3.4
   },
   {
     id: 'f3d74f8e-452e-4491-a211-97227d05b6a7',
@@ -31,16 +31,16 @@ const MOCK_OFFERS: OfferItems = [
     price: 160,
     previewImage: 'https://15.design.htmlacademy.pro/static/hotel/15.jpg',
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.858610000000006,
-      longitude: 2.330499,
+      latitude: 52.3609553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     isFavorite: true,
@@ -54,16 +54,16 @@ const MOCK_OFFERS: OfferItems = [
     price: 180,
     previewImage: 'https://15.design.htmlacademy.pro/static/hotel/20.jpg',
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.834610000000005,
-      longitude: 2.335499,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     isFavorite: true,
@@ -77,16 +77,16 @@ const MOCK_OFFERS: OfferItems = [
     price: 377,
     previewImage: 'https://15.design.htmlacademy.pro/static/hotel/14.jpg',
     city: {
-      name: 'Paris',
+      name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.85761,
-      longitude: 2.358499,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     isFavorite: true,
