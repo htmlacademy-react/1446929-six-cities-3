@@ -4,13 +4,13 @@ type CityLocation = {
   zoom: number;
 }
 
-type OfferLocation = {
+export type OfferLocation = {
   latitude: number;
   longitude: number;
   zoom: number;
 }
 
-type City = {
+export type City = {
   name: string;
   location: CityLocation;
 }
@@ -22,7 +22,7 @@ type OfferItem = {
   price: number;
   previewImage: string;
   city: City;
-  location?: OfferLocation;
+  location: OfferLocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;

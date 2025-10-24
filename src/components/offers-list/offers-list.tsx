@@ -1,16 +1,17 @@
 import PreviewOfferCard from '../preview-offer-card/preview-offer-card';
 import { OfferItems } from '../../types/offer';
-import { useState } from 'react';
+
 
 type OffersListProps = {
   offers: OfferItems;
+  onActiveOfferId: (id: string) => void;
 }
 
-function OffersList({ offers }: OffersListProps): JSX.Element {
-  const [, setActiveOfferId] = useState('');
+function OffersList({ offers, onActiveOfferId }: OffersListProps): JSX.Element {
 
-  const handleHoverIn = (id: string) => setActiveOfferId(id);
-  const handleHoverOut = () => setActiveOfferId('');
+
+  const handleHoverIn = (id: string) => onActiveOfferId(id);
+  const handleHoverOut = () => onActiveOfferId('');
 
   return (
     <div className="cities__places-list places__list tabs__content">

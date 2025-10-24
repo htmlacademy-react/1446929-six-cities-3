@@ -10,8 +10,8 @@ const MOCK_OFFERS: OfferItems = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
@@ -33,8 +33,8 @@ const MOCK_OFFERS: OfferItems = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
@@ -56,8 +56,8 @@ const MOCK_OFFERS: OfferItems = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
@@ -79,8 +79,8 @@ const MOCK_OFFERS: OfferItems = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 52.37454,
+        longitude: 4.897976,
         zoom: 13
       }
     },
