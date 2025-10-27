@@ -14,11 +14,12 @@ import PrivateRoute from '../components/private-route/private-route';
 type AppProps = {
   authorizationStatus: AuthorizationStatus;
   offers: OfferItems;
+  offersNearby: OfferItems;
   reviews: ReviewItems;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { authorizationStatus, offers, reviews } = props;
+  const { authorizationStatus, offers, offersNearby, reviews } = props;
 
   return (
     <HelmetProvider>
@@ -41,7 +42,7 @@ function App(props: AppProps): JSX.Element {
           />
 
           <Route path={AppRoute.Offer}
-            element={<Offer reviews={reviews} />}
+            element={<Offer reviews={reviews} offersNearby={offersNearby} offers={offers} />}
           />
 
           <Route path={AppRoute.NotFound}

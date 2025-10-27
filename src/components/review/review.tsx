@@ -1,5 +1,6 @@
 import { ReviewItem } from '../../types/review';
-import { RATING_STAR_QTY } from '../../const';
+import { RATING_STAR_QTY, formatDate } from '../../const';
+
 
 type ReviewProps = {
   review: ReviewItem;
@@ -36,7 +37,7 @@ function Review(props: ReviewProps): JSX.Element {
         <p className="reviews__text">
           {reviewText}
         </p>
-        <time className="reviews__time" dateTime={reviewDate}>{reviewDate}</time>
+        <time className="reviews__time" dateTime={formatDate(reviewDate)}>{formatDate(reviewDate)}</time>
       </div>
     </li>
   );
