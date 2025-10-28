@@ -4,14 +4,14 @@ import { OfferItems } from '../../types/offer';
 
 type OffersListProps = {
   offers: OfferItems;
-  onActiveOfferId: (id: string) => void;
+  onActiveOfferId?: (id: string) => void;
 }
 
 function OffersList({ offers, onActiveOfferId }: OffersListProps): JSX.Element {
 
 
-  const handleHoverIn = (id: string) => onActiveOfferId(id);
-  const handleHoverOut = () => onActiveOfferId('');
+  const handleHoverIn = (id: string) => onActiveOfferId?.(id);
+  const handleHoverOut = () => onActiveOfferId?.('');
 
   return (
     <div className="cities__places-list places__list tabs__content">

@@ -31,3 +31,10 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const formatDate = (date: string): string =>
+  new Intl.DateTimeFormat('en', {
+    month: 'long',
+    year: 'numeric'
+  }).format(new Date(date));
+

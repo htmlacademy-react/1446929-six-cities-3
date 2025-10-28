@@ -1,21 +1,26 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../const';
+import { OfferItems } from '../types/offer';
+import { ReviewItems } from '../types/review';
 import Main from '../pages/main/main';
 import Login from '../pages/login/login';
 import Favorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
-import { OfferItems } from '../types/offer';
 
 
 type AppProps = {
   authorizationStatus: AuthorizationStatus;
   offers: OfferItems;
+  offersNearby: OfferItems;
+  reviews: ReviewItems;
 }
 
-function App({ authorizationStatus, offers }: AppProps): JSX.Element {
+function App(props: AppProps): JSX.Element {
+  const { authorizationStatus, offers, offersNearby, reviews } = props;
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -37,7 +42,7 @@ function App({ authorizationStatus, offers }: AppProps): JSX.Element {
           />
 
           <Route path={AppRoute.Offer}
-            element={<Offer />}
+            element={<Offer reviews={reviews} offersNearby={offersNearby} offers={offers} />}
           />
 
           <Route path={AppRoute.NotFound}
