@@ -30,7 +30,7 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
 
   const mapOffers = [currentOffer, ...offersNearby.slice(0, 3)].filter((offer) => offer !== undefined);
 
-  const city = offersNearby[0]?.city;
+  const city = mapOffers[0]?.city;
 
   return (
     <div className="page">
