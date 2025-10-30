@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity, setActiveOfferId } from '../../store/action';
 import { Helmet } from 'react-helmet-async';
+import { SortType } from '../../const';
 import Header from '../../components/header/header';
 import LocationList from '../../components/location-list/location-list';
 import Sort from '../../components/sort/sort';
@@ -14,9 +15,23 @@ function Main(): JSX.Element {
   const offers = useAppSelector((state) => state.app.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
   const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
+  const sortType = useAppSelector((state) => state.app.sortType);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const city = filteredOffers[0]?.city ?? offers[0]?.city ?? { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } };
+
+  const sortedOffers = [...filteredOffers].sort((a, b) => {
+    switch (sortType) {
+      case SortType.PriceLowToHigh:
+        return a.price - b.price;
+      case SortType.PriceHighToLow:
+        return b.price - a.price;
+      case SortType.TopRatedFirst:
+        return b.rating - a.rating;
+      default:
+        return 0;
+    }
+  });
 
   return (
     <div className="page page--gray page--main">
@@ -42,7 +57,7 @@ function Main(): JSX.Element {
                 <b className="places__found">{`${filteredOffers.length} ${filteredOffers.length > 1 ? 'places' : 'place'} to stay in ${activeCity}`}</b>
                 <Sort />
                 <OffersList
-                  offers={filteredOffers}
+                  offers={sortedOffers}
                   onActiveOfferId={(id) => dispatch(setActiveOfferId(id))}
                 />
               </section>
