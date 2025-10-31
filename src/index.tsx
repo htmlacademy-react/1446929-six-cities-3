@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import App from './app/app';
 import { AuthorizationStatus } from './const';
 import { MOCK_OFFERS } from './mocks/mock-offers';
@@ -13,11 +15,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      authorizationStatus={AuthorizationStatus.Auth}
-      offers={MOCK_OFFERS}
-      offersNearby={MOCK_OFFERS_NEARBY}
-      reviews={MOCK_REVIEWS}
-    />
+    <Provider store={store}>
+      <App
+        authorizationStatus={AuthorizationStatus.Auth}
+        offers={MOCK_OFFERS}
+        offersNearby={MOCK_OFFERS_NEARBY}
+        reviews={MOCK_REVIEWS}
+      />
+    </Provider>
   </React.StrictMode>
 );

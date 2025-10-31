@@ -30,7 +30,7 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
 
   const mapOffers = [currentOffer, ...offersNearby.slice(0, 3)].filter((offer) => offer !== undefined);
 
-  const city = offersNearby[0]?.city;
+  const city = mapOffers[0]?.city;
 
   return (
     <div className="page">
@@ -187,13 +187,17 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ReviewsList reviews={reviews} />
+
+                {reviews && reviews.length > 0 && (
+                  <ReviewsList reviews={reviews} />
+                )}
+
                 <ReviewForm />
               </section>
             </div>
           </div>
           <section className="offer__map map">
-            {offersNearby.length > 0 && (
+            {mapOffers.length > 0 && (
               <Map city={city} offers={mapOffers} activeOfferId={currentOffer.id} />
             )}
           </section>
@@ -202,7 +206,9 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <OffersList offers={offersNearby.slice(0, 3)} />
+              {offersNearby && offersNearby.length > 0 && (
+                <OffersList offers={offersNearby.slice(0, 3)} />
+              )}
             </div>
           </section>
         </div>
