@@ -1,17 +1,15 @@
 import PreviewOfferCard from '../preview-offer-card/preview-offer-card';
 import { OfferItems } from '../../types/offer';
+import { useAppDispatch } from '../../hooks';
+import { setActiveOfferId } from '../../store/action';
 
 
 type OffersListProps = {
   offers: OfferItems;
-  onActiveOfferId?: (id: string) => void;
 }
 
-function OffersList({ offers, onActiveOfferId }: OffersListProps): JSX.Element {
-
-
-  const handleHoverIn = (id: string) => onActiveOfferId?.(id);
-  const handleHoverOut = () => onActiveOfferId?.('');
+function OffersList({ offers }: OffersListProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   return (
     <div className="cities__places-list places__list tabs__content">
@@ -21,8 +19,8 @@ function OffersList({ offers, onActiveOfferId }: OffersListProps): JSX.Element {
           <PreviewOfferCard
             offer={offer}
             key={offer.id}
-            onHoverIn={() => handleHoverIn(offer.id)}
-            onHoverOut={handleHoverOut}
+            onHoverIn={() => dispatch(setActiveOfferId(offer.id))}
+            onHoverOut={() => dispatch(setActiveOfferId(''))}
             viewMode='cities'
             viewWidth={260}
             viewHeight={200}

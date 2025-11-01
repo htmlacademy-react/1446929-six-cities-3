@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, setActiveOfferId } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { Helmet } from 'react-helmet-async';
 import { SortType } from '../../const';
 import Header from '../../components/header/header';
@@ -58,7 +58,6 @@ function Main(): JSX.Element {
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
-                  onActiveOfferId={(id) => dispatch(setActiveOfferId(id))}
                 />
               </section>
               <div className="cities__right-section">
