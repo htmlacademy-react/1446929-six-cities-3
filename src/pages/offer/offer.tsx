@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ReviewItems } from '../../types/review';
-import { OfferItems } from '../../types/offer';
+import { OfferItems, Offer } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import { useAppDispatch } from '../../hooks';
 
 type OfferProps = {
   reviews: ReviewItems;
@@ -18,6 +20,7 @@ type OfferProps = {
 }
 
 function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | null {
+  const dispatch = useAppDispatch();
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -99,12 +102,11 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
                 <h1 className="offer__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  view='offer'
+                  isFavorite={currentOffer.isFavorite}
+                  onClick={() => dispatch()}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

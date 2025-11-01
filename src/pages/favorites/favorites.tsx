@@ -75,7 +75,7 @@ function Favorites({ offers }: FavoritesProps): JSX.Element {
                     {offersByCity.map((offer) => (
                       <PreviewOfferCard
                         offer={offer}
-                        viewMode='favorites'
+                        view='favorites'
                         viewWidth={150}
                         viewHeight={110}
                         key={offer.id}

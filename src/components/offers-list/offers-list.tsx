@@ -21,7 +21,7 @@ function OffersList({ offers }: OffersListProps): JSX.Element {
             key={offer.id}
             onHoverIn={() => dispatch(setActiveOfferId(offer.id))}
             onHoverOut={() => dispatch(setActiveOfferId(''))}
-            viewMode='cities'
+            view='cities'
             viewWidth={260}
             viewHeight={200}
           />
