@@ -2,7 +2,6 @@ import { Offer } from '../../types/offer';
 import { RATING_STAR_QTY } from '../../const';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
-import { useAppDispatch } from '../../hooks';
 
 
 type PreviewOfferCardProps = {
@@ -15,7 +14,6 @@ type PreviewOfferCardProps = {
 }
 
 function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
 
   const { offer, onHoverIn, onHoverOut, view, viewWidth, viewHeight } = props;
 
@@ -40,11 +38,10 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-
           <FavoriteButton
             view='card'
             isFavorite={isFavorite}
-            onClick={() => dispatch()}
+            offerId={offer.id}
           />
         </div>
         <div className="place-card__rating rating">

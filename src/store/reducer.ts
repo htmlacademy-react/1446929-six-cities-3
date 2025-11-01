@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, setActiveOfferId, loadOffers, changeSortType } from './action';
+import { changeCity, setActiveOfferId, loadOffers, changeSortType, toggleFavorite } from './action';
 import { CITIES, SortType } from '../const';
 import { OfferItems } from '../types/offer';
 import { MOCK_OFFERS } from '../mocks/mock-offers';
@@ -9,13 +9,15 @@ type AppState = {
   activeOfferId: string;
   offers: OfferItems;
   sortType: SortType;
+  favoriteOfferId: string;
 }
 
 const initialState: AppState = {
   activeCity: CITIES[0],
   activeOfferId: '',
   offers: MOCK_OFFERS,
-  sortType: SortType.Popular
+  sortType: SortType.Popular,
+  favoriteOfferId: ''
 };
 
 export const appReducer = createReducer(initialState, (builder) => {
@@ -32,5 +34,11 @@ export const appReducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
+    })
+    .addCase(toggleFavorite, (state, action) => {
+      const offer = state.offers.find((offerItem) => offerItem.id === action.payload);
+      if (offer) {
+        offer.isFavorite = !offer.isFavorite;
+      }
     });
 });

@@ -4,23 +4,23 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ReviewItems } from '../../types/review';
-import { OfferItems, Offer } from '../../types/offer';
+import { OfferItems } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
-import { useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
+
 
 type OfferProps = {
   reviews: ReviewItems;
-  offers: OfferItems;
   offersNearby: OfferItems;
 }
 
-function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | null {
-  const dispatch = useAppDispatch();
+function Offer({ reviews, offersNearby }: OfferProps): JSX.Element | null {
+  const offers = useAppSelector((state) => state.app.offers);
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
                 <FavoriteButton
                   view='offer'
                   isFavorite={currentOffer.isFavorite}
-                  onClick={() => dispatch()}
+                  offerId={currentOffer.id}
                 />
               </div>
               <div className="offer__rating rating">

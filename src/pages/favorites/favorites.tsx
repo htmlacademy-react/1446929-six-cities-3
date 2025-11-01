@@ -1,16 +1,14 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { OfferItems } from '../../types/offer';
 import { Offer } from '../../types/offer';
 import { AppRoute } from '../../const';
 import PreviewOfferCard from '../../components/preview-offer-card/preview-offer-card';
 import Logo from '../../components/logo/logo';
+import { useAppSelector } from '../../hooks';
 
-type FavoritesProps = {
-  offers: OfferItems;
-}
 
-function Favorites({ offers }: FavoritesProps): JSX.Element {
+function Favorites(): JSX.Element {
+  const offers = useAppSelector((state) => state.app.offers);
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   const favoriteOffersByCity = favoriteOffers.reduce<Record<string, Offer[]>>((acc, offer) => {
