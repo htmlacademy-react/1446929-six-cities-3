@@ -14,7 +14,6 @@ function Main(): JSX.Element {
   const dispatch = useAppDispatch();
   const offers = useAppSelector((state) => state.app.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
-  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
   const sortType = useAppSelector((state) => state.app.sortType);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
@@ -63,7 +62,7 @@ function Main(): JSX.Element {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   {filteredOffers.length > 0 && (
-                    <Map city={city} offers={filteredOffers} activeOfferId={activeOfferId} />
+                    <Map city={city} offers={filteredOffers} />
                   )}
                 </section>
               </div>

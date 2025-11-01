@@ -198,7 +198,7 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
           </div>
           <section className="offer__map map">
             {mapOffers.length > 0 && (
-              <Map city={city} offers={mapOffers} activeOfferId={currentOffer.id} />
+              <Map city={city} offers={mapOffers} />
             )}
           </section>
         </section>
