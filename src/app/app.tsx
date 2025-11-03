@@ -13,13 +13,12 @@ import PrivateRoute from '../components/private-route/private-route';
 
 type AppProps = {
   authorizationStatus: AuthorizationStatus;
-  offers: OfferItems;
   offersNearby: OfferItems;
   reviews: ReviewItems;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { authorizationStatus, offers, offersNearby, reviews } = props;
+  const { authorizationStatus, offersNearby, reviews } = props;
 
   return (
     <HelmetProvider>

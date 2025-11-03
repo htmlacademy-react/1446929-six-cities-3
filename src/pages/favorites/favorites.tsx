@@ -5,6 +5,7 @@ import { AppRoute } from '../../const';
 import PreviewOfferCard from '../../components/preview-offer-card/preview-offer-card';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 
 
 function Favorites(): JSX.Element {
@@ -54,36 +55,39 @@ function Favorites(): JSX.Element {
         </div>
       </header>
 
-      <main className="page__main page__main--favorites">
+      <main className={`page__main page__main--favorites ${favoriteOffers.length === 0 && 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
+          {favoriteOffers.length > 0 ? (
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
 
-              {Object.entries(favoriteOffersByCity).map(([city, offersByCity]) => (
-                <li key={city} className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
+                {Object.entries(favoriteOffersByCity).map(([city, offersByCity]) => (
+                  <li key={city} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    {offersByCity.map((offer) => (
-                      <PreviewOfferCard
-                        offer={offer}
-                        view='favorites'
-                        viewWidth={150}
-                        viewHeight={110}
-                        key={offer.id}
-                      />
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
+                    <div className="favorites__places">
+                      {offersByCity.map((offer) => (
+                        <PreviewOfferCard
+                          offer={offer}
+                          view='favorites'
+                          viewWidth={150}
+                          viewHeight={110}
+                          key={offer.id}
+                        />
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : <FavoritesEmpty />}
+
         </div>
       </main>
       <footer className="footer container">

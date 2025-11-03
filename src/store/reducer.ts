@@ -9,7 +9,6 @@ type AppState = {
   activeOfferId: string;
   offers: OfferItems;
   sortType: SortType;
-  favoriteOfferId: string;
 }
 
 const initialState: AppState = {
@@ -17,7 +16,6 @@ const initialState: AppState = {
   activeOfferId: '',
   offers: MOCK_OFFERS,
   sortType: SortType.Popular,
-  favoriteOfferId: ''
 };
 
 export const appReducer = createReducer(initialState, (builder) => {
