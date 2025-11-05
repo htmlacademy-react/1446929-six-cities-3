@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, setActiveOfferId, loadOffers, changeSortType, toggleFavorite } from './action';
-import { CITIES, SortType } from '../const';
+import { changeCity, setActiveOfferId, loadOffers, changeSortType, toggleFavorite, requireAuthorization } from './action';
+import { CITIES, SortType, AuthorizationStatus } from '../const';
 import { OfferItems } from '../types/offer';
 import { MOCK_OFFERS } from '../mocks/mock-offers';
 
@@ -9,6 +9,7 @@ type AppState = {
   activeOfferId: string;
   offers: OfferItems;
   sortType: SortType;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: AppState = {
@@ -16,6 +17,7 @@ const initialState: AppState = {
   activeOfferId: '',
   offers: MOCK_OFFERS,
   sortType: SortType.Popular,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 export const appReducer = createReducer(initialState, (builder) => {
@@ -38,5 +40,8 @@ export const appReducer = createReducer(initialState, (builder) => {
       if (offer) {
         offer.isFavorite = !offer.isFavorite;
       }
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
