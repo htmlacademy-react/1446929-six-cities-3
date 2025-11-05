@@ -8,16 +8,25 @@ import Sort from '../../components/sort/sort';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import OffersListEmpty from '../../components/offers-list-empty/offers-list-empty';
+import Spinner from '../../components/spinner/spinner';
 
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.app.offers);
+  const { offers, isLoading, error } = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
   const sortType = useAppSelector((state) => state.app.sortType);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const city = filteredOffers[0]?.city ?? offers[0]?.city ?? { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   const sortedOffers = [...filteredOffers].sort((a, b) => {
     switch (sortType) {

@@ -9,7 +9,7 @@ import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 
 
 function Favorites(): JSX.Element {
-  const offers = useAppSelector((state) => state.app.offers);
+  const offers = useAppSelector((state) => state.offers);
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
 
   const favoriteOffersByCity = favoriteOffers.reduce<Record<string, Offer[]>>((acc, offer) => {

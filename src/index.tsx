@@ -6,7 +6,9 @@ import App from './app/app';
 import { AuthorizationStatus } from './const';
 import { MOCK_REVIEWS } from './mocks/mock-reviews';
 import { MOCK_OFFERS_NEARBY } from './mocks/mock-offers-nearby';
+import { fetchOffers } from './store/api-actions';
 
+store.dispatch(fetchOffers());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -30,6 +30,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+}
+
 export enum SortType {
   Popular = 'Popular',
   PriceLowToHigh = 'Price: low to high',

@@ -1,0 +1,41 @@
+function Spinner(): JSX.Element {
+  return (
+    <div className="page page--gray page--main">
+      <div className="loading-screen">
+        <div className="spinner"></div>
+        <p className="loading-text">Loading offers...</p>
+      </div>
+
+      <style>{`
+        .loading-screen {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          text-align: center;
+        }
+        .spinner {
+          border: 5px solid #f3f3f3;
+          border-top: 5px solid #4481c3;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+          margin-bottom: 16px;
+        }
+        .loading-text {
+          font-size: 18px;
+          color: #333;
+        }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}
+      </style>
+    </div>
+  );
+}
+
+export default Spinner;
