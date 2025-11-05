@@ -9,6 +9,7 @@ import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import OffersListEmpty from '../../components/offers-list-empty/offers-list-empty';
 import Spinner from '../../components/spinner/spinner';
+import ErrorScreen from '../../components/error-screen/error-screen';
 
 
 function Main(): JSX.Element {
@@ -25,7 +26,7 @@ function Main(): JSX.Element {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <ErrorScreen message='Unable to connect to the server. Please check your internet connection' />;
   }
 
   const sortedOffers = [...filteredOffers].sort((a, b) => {
