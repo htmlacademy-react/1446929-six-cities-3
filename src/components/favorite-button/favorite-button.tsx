@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks';
-import { toggleFavorite } from '../../store/action';
+import { toggleFavoriteStatus } from '../../store/api-actions';
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
@@ -10,32 +10,23 @@ type FavoriteButtonProps = {
 function FavoriteButton({ isFavorite, view, offerId }: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const baseClass = view === 'offer' ? 'offer__bookmark-button' : 'place-card__bookmark-button';
-  const iconClass = view === 'offer' ? 'offer__bookmark-icon' : 'place-card__bookmark-icon';
-  const [width, height] = view === 'offer' ? [31, 33] : [18, 19];
-
-  const activeClass = isFavorite ? `${baseClass}--active` : baseClass;
-
   const handleClick = () => {
-    dispatch(toggleFavorite(offerId));
+    dispatch(toggleFavoriteStatus({ offerId, status: !isFavorite }));
   };
+
+  const classPrefix = view === 'offer' ? 'offer' : 'place-card';
+  const activeClass = isFavorite ? `${classPrefix}__bookmark-button--active` : '';
 
   return (
     <button
-      className={`${activeClass} button`}
+      className={`${classPrefix}__bookmark-button button ${activeClass}`}
       type="button"
       onClick={handleClick}
     >
-      <svg
-        className={iconClass}
-        width={width}
-        height={height}
-      >
-        <use xlinkHref="#icon-bookmark"></use>
+      <svg className={`${classPrefix}__bookmark-icon`} width={view === 'offer' ? 31 : 18} height={view === 'offer' ? 33 : 19}>
+        <use xlinkHref="#icon-bookmark" />
       </svg>
-      <span className="visually-hidden">
-        {isFavorite ? 'Remove from bookmarks' : 'To bookmarks'}
-      </span>
+      <span className="visually-hidden">{isFavorite ? 'In bookmarks' : 'To bookmarks'}</span>
     </button>
   );
 }

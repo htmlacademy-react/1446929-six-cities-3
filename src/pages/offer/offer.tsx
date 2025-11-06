@@ -20,11 +20,10 @@ type OfferProps = {
 }
 
 function Offer({ reviews, offersNearby }: OfferProps): JSX.Element | null {
-  const { offers } = useAppSelector((state) => state.offers);
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const currentOffer = offers.find((offer) => offer.id === id);
+  const currentOffer = useAppSelector((state) => state.offers.offers.find((offer) => offer.id === id));
 
   if (!currentOffer) {
     navigate(AppRoute.Main);

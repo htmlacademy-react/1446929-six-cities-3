@@ -1,7 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { toggleFavorite } from './action';
 import { OfferItems } from '../types/offer';
-import { fetchOffers } from './api-actions';
+import { fetchOffers, toggleFavoriteStatus } from './api-actions';
 
 type OffersState = {
   offers: OfferItems;
@@ -29,10 +28,11 @@ export const offersReducer = createReducer(initialOffersState, (builder) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load offers';
     })
-    .addCase(toggleFavorite, (state, action) => {
-      const offer = state.offers.find((offerItem) => offerItem.id === action.payload);
-      if (offer) {
-        offer.isFavorite = !offer.isFavorite;
+    .addCase(toggleFavoriteStatus.fulfilled, (state, action) => {
+      const updatedOffer = action.payload;
+      const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      if (index !== -1) {
+        state.offers[index] = updatedOffer;
       }
     });
 });

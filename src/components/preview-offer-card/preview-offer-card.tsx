@@ -2,6 +2,7 @@ import { Offer } from '../../types/offer';
 import { RATING_STAR_QTY } from '../../const';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
+import { useAppSelector } from '../../hooks';
 
 
 type PreviewOfferCardProps = {
@@ -17,7 +18,12 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
 
   const { offer, onHoverIn, onHoverOut, view, viewWidth, viewHeight } = props;
 
-  const { rating, previewImage, title, isPremium, isFavorite, price, type } = offer;
+  const updatedOffer = useAppSelector((state) =>
+    state.offers.offers.find((offerItem) => offerItem.id === offer.id));
+
+  const currentOffer = updatedOffer ?? offer;
+
+  const { rating, previewImage, title, isPremium, isFavorite, price, type } = currentOffer;
 
   const ratingToInteger = Math.round(rating);
 
@@ -29,7 +35,13 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
         </div>}
       <div className={`${view}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={previewImage} width={viewWidth} height={viewHeight} alt={title} />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={viewWidth}
+            height={viewHeight}
+            alt={title}
+          />
         </Link>
       </div>
       <div className="place-card__info">
