@@ -4,26 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ReviewItems } from '../../types/review';
-import { OfferItems } from '../../types/offer';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchOffersNearby } from '../../store/api-actions';
 
 
 type OfferProps = {
   reviews: ReviewItems;
-  offersNearby: OfferItems;
 }
 
-function Offer({ reviews, offersNearby }: OfferProps): JSX.Element | null {
+function Offer({ reviews }: OfferProps): JSX.Element | null {
 
   const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
+  const offersNearby = useAppSelector((state) => state.offers.offersNearby);
   const navigate = useNavigate();
   const currentOffer = useAppSelector((state) => state.offers.offers.find((offer) => offer.id === id));
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOffersNearby(id));
+    }
+  }, [id, dispatch]);
 
   if (!currentOffer) {
     navigate(AppRoute.Main);
@@ -199,7 +207,7 @@ function Offer({ reviews, offersNearby }: OfferProps): JSX.Element | null {
           </div>
           <section className="offer__map map">
             {mapOffers.length > 0 && (
-              <Map city={city} offers={mapOffers} />
+              <Map city={city} offers={mapOffers} activeOfferId={currentOffer.id} />
             )}
           </section>
         </section>

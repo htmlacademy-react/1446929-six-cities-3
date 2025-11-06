@@ -4,11 +4,12 @@ import useMap from '../../hooks/use-map';
 import { City, OfferItems } from '../../types/offer';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
 import 'leaflet/dist/leaflet.css';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
 
 type MapProps = {
   city: City;
   offers: OfferItems;
+  activeOfferId?: string | null;
 }
 
 const defaultCustomIcon = new Icon({
@@ -24,9 +25,9 @@ const currentCustomIcon = new Icon({
 });
 
 function Map(props: MapProps): JSX.Element {
-  const { city, offers } = props;
+  const { city, offers, activeOfferId } = props;
 
-  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
+  // const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);

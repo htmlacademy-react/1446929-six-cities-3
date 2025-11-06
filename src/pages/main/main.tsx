@@ -17,6 +17,7 @@ function Main(): JSX.Element {
   const { offers, isLoading, error } = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
   const sortType = useAppSelector((state) => state.app.sortType);
+  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const city = filteredOffers[0]?.city ?? offers[0]?.city ?? { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } };
@@ -72,7 +73,7 @@ function Main(): JSX.Element {
               <div className="cities__right-section">
                 <section className="cities__map map">
                   {filteredOffers.length > 0 && (
-                    <Map city={city} offers={filteredOffers} />
+                    <Map city={city} offers={filteredOffers} activeOfferId={activeOfferId} />
                   )}
                 </section>
               </div>

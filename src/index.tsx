@@ -5,7 +5,6 @@ import { store } from './store';
 import App from './app/app';
 import { AuthorizationStatus } from './const';
 import { MOCK_REVIEWS } from './mocks/mock-reviews';
-import { MOCK_OFFERS_NEARBY } from './mocks/mock-offers-nearby';
 import { fetchOffers } from './store/api-actions';
 
 store.dispatch(fetchOffers());
@@ -19,7 +18,6 @@ root.render(
     <Provider store={store}>
       <App
         authorizationStatus={AuthorizationStatus.Auth}
-        offersNearby={MOCK_OFFERS_NEARBY}
         reviews={MOCK_REVIEWS}
       />
     </Provider>

@@ -1,15 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferItems } from '../types/offer';
-import { fetchOffers, toggleFavoriteStatus } from './api-actions';
+import { fetchOffers, fetchOffersNearby, toggleFavoriteStatus } from './api-actions';
 
 type OffersState = {
   offers: OfferItems;
+  offersNearby: OfferItems;
   isLoading: boolean;
   error: string | null;
 }
 
 const initialOffersState: OffersState = {
   offers: [],
+  offersNearby: [],
   isLoading: false,
   error: null,
 };
@@ -27,6 +29,17 @@ export const offersReducer = createReducer(initialOffersState, (builder) => {
     .addCase(fetchOffers.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load offers';
+    })
+    .addCase(fetchOffersNearby.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(fetchOffersNearby.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.offersNearby = action.payload;
+    })
+    .addCase(fetchOffersNearby.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Failed to load nearby offers';
     })
     .addCase(toggleFavoriteStatus.fulfilled, (state, action) => {
       const updatedOffer = action.payload;
