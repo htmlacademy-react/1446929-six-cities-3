@@ -20,7 +20,7 @@ type OfferProps = {
 }
 
 function Offer({ reviews, offersNearby }: OfferProps): JSX.Element | null {
-  const offers = useAppSelector((state) => state.app.offers);
+  const { offers } = useAppSelector((state) => state.offers);
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();

@@ -16,3 +16,15 @@ export const fetchOffers = createAsyncThunk<OfferItems, undefined, {
     return data;
   }
 );
+
+export const fetchFavoriteOffers = createAsyncThunk<OfferItems, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'favoriteOffers/fetchFavoriteOffers',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<OfferItems>(APIRoute.Favorite);
+    return data;
+  }
+);
