@@ -1,27 +1,36 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { ReviewItems } from '../../types/review';
-import { OfferItems } from '../../types/offer';
-import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
 import OffersList from '../../components/offers-list/offers-list';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchOffersNearby } from '../../store/api-actions';
+import Header from '../../components/header/header';
+
 
 type OfferProps = {
   reviews: ReviewItems;
-  offers: OfferItems;
-  offersNearby: OfferItems;
 }
 
-function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | null {
+function Offer({ reviews }: OfferProps): JSX.Element | null {
 
   const { id } = useParams<{ id: string }>();
+  const dispatch = useAppDispatch();
+  const offersNearby = useAppSelector((state) => state.offers.offersNearby);
   const navigate = useNavigate();
-  const currentOffer = offers.find((offer) => offer.id === id);
+  const currentOffer = useAppSelector((state) => state.offers.offers.find((offer) => offer.id === id));
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOffersNearby(id));
+    }
+  }, [id, dispatch]);
 
   if (!currentOffer) {
     navigate(AppRoute.Main);
@@ -37,33 +46,8 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
       <Helmet>
         <title>6 cities - Offer</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="#">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+
+      <Header />
 
 
       <main className="page__main page__main--offer">
@@ -99,12 +83,11 @@ function Offer({ reviews, offersNearby, offers }: OfferProps): JSX.Element | nul
                 <h1 className="offer__name">
                   Beautiful &amp; luxurious studio at great location
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoriteButton
+                  view='offer'
+                  isFavorite={currentOffer.isFavorite}
+                  offerId={currentOffer.id}
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

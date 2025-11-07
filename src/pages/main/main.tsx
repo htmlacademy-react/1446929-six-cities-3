@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity, setActiveOfferId } from '../../store/action';
+import { changeCity } from '../../store/action';
 import { Helmet } from 'react-helmet-async';
 import { SortType } from '../../const';
 import Header from '../../components/header/header';
@@ -8,17 +8,27 @@ import Sort from '../../components/sort/sort';
 import OffersList from '../../components/offers-list/offers-list';
 import Map from '../../components/map/map';
 import OffersListEmpty from '../../components/offers-list-empty/offers-list-empty';
+import Spinner from '../../components/spinner/spinner';
+import ErrorScreen from '../../components/error-screen/error-screen';
 
 
 function Main(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector((state) => state.app.offers);
+  const { offers, isLoading, error } = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
-  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
   const sortType = useAppSelector((state) => state.app.sortType);
+  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const city = filteredOffers[0]?.city ?? offers[0]?.city ?? { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    return <ErrorScreen message='Unable to connect to the server. Please check your internet connection' />;
+  }
 
   const sortedOffers = [...filteredOffers].sort((a, b) => {
     switch (sortType) {
@@ -58,7 +68,6 @@ function Main(): JSX.Element {
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
-                  onActiveOfferId={(id) => dispatch(setActiveOfferId(id))}
                 />
               </section>
               <div className="cities__right-section">
