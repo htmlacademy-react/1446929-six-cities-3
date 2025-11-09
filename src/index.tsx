@@ -7,6 +7,7 @@ import { MOCK_REVIEWS } from './mocks/mock-reviews';
 import ErrorScreen from './components/error-screen/error-screen';
 import { checkAuthAction } from './store/api-actions';
 
+
 store.dispatch(checkAuthAction());
 
 

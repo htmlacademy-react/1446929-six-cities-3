@@ -11,7 +11,6 @@ import PrivateRoute from '../components/private-route/private-route';
 import { fetchOffers } from '../store/api-actions';
 import { store } from '../store';
 
-
 store.dispatch(fetchOffers());
 
 type AppProps = {
