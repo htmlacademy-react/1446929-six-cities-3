@@ -8,7 +8,11 @@ import Favorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
+import { fetchOffers } from '../store/api-actions';
+import { store } from '../store';
 
+
+store.dispatch(fetchOffers());
 
 type AppProps = {
   reviews: ReviewItems;
