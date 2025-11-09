@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { ReviewItems } from '../types/review';
 import Main from '../pages/main/main';
 import Login from '../pages/login/login';
 import Favorites from '../pages/favorites/favorites';
@@ -11,12 +10,8 @@ import PrivateRoute from '../components/private-route/private-route';
 import { useAppSelector } from '../hooks';
 import Spinner from '../components/spinner/spinner';
 
-type AppProps = {
-  reviews: ReviewItems;
-}
 
-function App(props: AppProps): JSX.Element {
-  const { reviews } = props;
+function App(): JSX.Element {
 
   const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
 
@@ -51,7 +46,7 @@ function App(props: AppProps): JSX.Element {
           />
 
           <Route path={AppRoute.Offer}
-            element={<Offer reviews={reviews} />}
+            element={<Offer />}
           />
 
           <Route path={AppRoute.NotFound}

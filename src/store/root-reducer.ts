@@ -3,10 +3,12 @@ import { appReducer } from './app-reducer';
 import { offersReducer } from './offers-reducer';
 import { favoriteOffersReducer } from './favorites-reducer';
 import { userReducer } from './user-reducer';
+import { reviewsReducer } from './reviews-reducer';
 
 export const rootReducer = combineReducers({
   app: appReducer,
   offers: offersReducer,
   favorites: favoriteOffersReducer,
-  user: userReducer
+  user: userReducer,
+  reviews: reviewsReducer
 });

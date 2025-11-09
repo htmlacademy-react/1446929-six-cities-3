@@ -1,8 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { ReviewItems } from '../../types/review';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
@@ -10,32 +8,37 @@ import OffersList from '../../components/offers-list/offers-list';
 import FavoriteButton from '../../components/favorite-button/favorite-button';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
-import { fetchOffersNearby } from '../../store/api-actions';
+import { fetchOffersNearby, fetchReviews } from '../../store/api-actions';
 import Header from '../../components/header/header';
 
 
-type OfferProps = {
-  reviews: ReviewItems;
-}
+function Offer(): JSX.Element | null {
 
-function Offer({ reviews }: OfferProps): JSX.Element | null {
-
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id?: string }>();
   const dispatch = useAppDispatch();
   const offersNearby = useAppSelector((state) => state.offers.offersNearby);
+  const reviews = useAppSelector((state) => state.reviews.reviews);
   const navigate = useNavigate();
   const currentOffer = useAppSelector((state) => state.offers.offers.find((offer) => offer.id === id));
 
   useEffect(() => {
     if (id) {
+      dispatch(fetchReviews(id));
       dispatch(fetchOffersNearby(id));
     }
   }, [id, dispatch]);
 
+
+  useEffect(() => {
+    if (!currentOffer) {
+      navigate(AppRoute.Main);
+    }
+  }, [currentOffer, navigate]);
+
   if (!currentOffer) {
-    navigate(AppRoute.Main);
     return null;
   }
+
 
   const mapOffers = [currentOffer, ...offersNearby.slice(0, 3)].filter((offer) => offer !== undefined);
 
