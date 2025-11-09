@@ -25,7 +25,7 @@ function Favorites(): JSX.Element {
   }
 
   if (error) {
-    return <ErrorScreen message={error} />;
+    return <ErrorScreen />;
   }
 
   if (favoriteOffers.length === 0) {

@@ -11,12 +11,11 @@ import PrivateRoute from '../components/private-route/private-route';
 
 
 type AppProps = {
-  authorizationStatus: AuthorizationStatus;
   reviews: ReviewItems;
 }
 
 function App(props: AppProps): JSX.Element {
-  const { authorizationStatus, reviews } = props;
+  const { reviews } = props;
 
   return (
     <HelmetProvider>
@@ -32,7 +31,7 @@ function App(props: AppProps): JSX.Element {
 
           <Route path={AppRoute.Favorites}
             element={
-              <PrivateRoute mustBeRender={authorizationStatus === AuthorizationStatus.Auth} >
+              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} >
                 <Favorites />
               </PrivateRoute>
             }
