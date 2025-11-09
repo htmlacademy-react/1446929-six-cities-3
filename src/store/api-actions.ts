@@ -95,6 +95,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, {
     const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(data.token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(fetchFavoriteOffers());
     return data;
   },
 );

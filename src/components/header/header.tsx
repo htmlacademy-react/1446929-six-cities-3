@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
@@ -29,7 +30,7 @@ function Header(): JSX.Element {
           <nav className="header__nav">
             <ul className="header__nav-list">
               {authorizationStatus === AuthorizationStatus.Auth ? (
-                <>
+                <React.Fragment>
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
@@ -49,7 +50,7 @@ function Header(): JSX.Element {
                       </span>
                     </Link>
                   </li>
-                </>
+                </React.Fragment>
               ) : (
                 <li className="header__nav-item">
                   <Link className="header__nav-link" to={AppRoute.Login}>
