@@ -1,7 +1,7 @@
+import { useRef, FormEvent, useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { useRef, FormEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 
@@ -10,20 +10,52 @@ function Login(): JSX.Element {
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordError, setPasswordError] = useState('');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const isPasswordValid = (password: string): boolean => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
+    return passwordRegex.test(password);
+  };
+
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const password = evt.target.value;
+    if (!isPasswordValid(password)) {
+      setPasswordError('Password must contain at least one letter, one number, and no spaces.');
+    } else {
+      setPasswordError('');
+    }
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
-    }
+    (async () => {
+      if (loginRef.current && passwordRef.current) {
+        const email = loginRef.current.value;
+        const password = passwordRef.current.value;
+
+        if (!isPasswordValid(password)) {
+          setPasswordError('Password must contain at least one letter, one number, and no spaces.');
+          return;
+        }
+
+        setPasswordError('');
+
+        try {
+          await dispatch(loginAction({ login: email, password })).unwrap();
+          navigate(AppRoute.Main);
+        } catch (err) {
+          setPasswordError('Invalid credentials. Please check your email and password.');
+        }
+      }
+    })();
+
+
   };
+
 
   return (
     <div className="page page--gray page--login">
@@ -48,8 +80,6 @@ function Login(): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <form
               className="login__form form"
-              action=""
-              method="post"
               onSubmit={handleSubmit}
             >
               <div className="login__input-wrapper form__input-wrapper">
@@ -72,10 +102,15 @@ function Login(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  onChange={handlePasswordChange}
                 />
+                {passwordError && (
+                  <p style={{ color: 'red', marginTop: '4px', fontSize: '12px' }}>
+                    {passwordError}
+                  </p>
+                )}
               </div>
               <button
-                onClick={() => navigate(AppRoute.Main)}
                 className="login__submit form__submit button"
                 type="submit"
               >
@@ -85,9 +120,9 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to={AppRoute.Main}>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

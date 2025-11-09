@@ -67,7 +67,7 @@ export const toggleFavoriteStatus = createAsyncThunk<Offer, { offerId: string; s
   }
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserData | null, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -75,24 +75,27 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'user/checkAuth',
   async (_arg, { dispatch, extra: api }) => {
     try {
-      await api.get(APIRoute.Login);
+      const { data } = await api.get<UserData>(APIRoute.Login);
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      return data;
     } catch {
       dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      return null;
     }
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, {
+export const loginAction = createAsyncThunk<UserData, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token } } = await api.post<UserData>(APIRoute.Login, { email, password });
-    saveToken(token);
+    const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(data.token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    return data;
   },
 );
 

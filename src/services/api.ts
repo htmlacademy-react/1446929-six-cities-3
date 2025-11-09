@@ -28,7 +28,7 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.request.use((config) => {
     const token = getToken();
 
-    if (token && config.headers) {
+    if (token && token !== 'undefined' && token !== 'null' && config.headers) {
       config.headers['X-Token'] = token;
     }
 
@@ -39,8 +39,11 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        const detailMessage = (error.response.data);
+      const { response, config } = error;
+      const isCheckAuth = config?.url?.includes('/login') && config.method === 'get';
+
+      if (response && shouldDisplayError(response) && !isCheckAuth) {
+        const detailMessage = (response.data);
 
         processErrorHandle(detailMessage.message);
       }
@@ -51,3 +54,4 @@ export const createAPI = (): AxiosInstance => {
 
   return api;
 };
+
