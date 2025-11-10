@@ -4,6 +4,12 @@ export type User = {
   isPro: boolean;
 }
 
+export type ReviewData = {
+  offerId: string;
+  comment: string;
+  rating: number;
+}
+
 type Review = {
   id: string;
   comment: string;

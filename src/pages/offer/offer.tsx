@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
-import { RATING_STAR_QTY } from '../../const';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppRoute, RATING_STAR_QTY } from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
@@ -10,31 +10,41 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchOffersNearby, fetchReviews, fetchOfferById } from '../../store/api-actions';
 import Header from '../../components/header/header';
+import Spinner from '../../components/spinner/spinner';
 
 
 function Offer(): JSX.Element | null {
 
   const { id } = useParams<{ id?: string }>();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const offersNearby = useAppSelector((state) => state.offers.offersNearby);
   const reviews = useAppSelector((state) => state.reviews.reviews);
-  const currentOffer = useAppSelector((state) => state.offers.currentOffer);
+  const { isLoading, currentOffer } = useAppSelector((state) => state.offers);
   const ratingToInteger = currentOffer?.rating ? Math.round(currentOffer.rating) : 0;
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchReviews(id));
-      dispatch(fetchOffersNearby(id));
-      dispatch(fetchOfferById(id));
+    if (!id) {
+      return;
     }
-  }, [id, dispatch]);
 
+    const fetchData = async () => {
+      try {
+        await dispatch(fetchOfferById(id)).unwrap();
 
-  useEffect(() => {
-    if (id && currentOffer === null) {
-      dispatch(fetchOfferById(id));
-    }
-  }, [id, currentOffer, dispatch]);
+        dispatch(fetchReviews(id));
+        dispatch(fetchOffersNearby(id));
+      } catch {
+        navigate(AppRoute.NotFound);
+      }
+    };
+
+    fetchData();
+  }, [id, dispatch, navigate]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (!currentOffer) {
     return null;
