@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppRoute, RATING_STAR_QTY } from '../../const';
+import { AppRoute, AuthorizationStatus, RATING_STAR_QTY } from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Map from '../../components/map/map';
@@ -20,6 +20,7 @@ function Offer(): JSX.Element | null {
   const navigate = useNavigate();
   const offersNearby = useAppSelector((state) => state.offers.offersNearby);
   const reviews = useAppSelector((state) => state.reviews.reviews);
+  const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
   const { isLoading, currentOffer } = useAppSelector((state) => state.offers);
   const ratingToInteger = currentOffer?.rating ? Math.round(currentOffer.rating) : 0;
 
@@ -165,7 +166,8 @@ function Offer(): JSX.Element | null {
                   />
                 )}
 
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
+
               </section>
             </div>
           </div>
