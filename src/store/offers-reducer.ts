@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { OfferItems } from '../types/offer';
-import { fetchOffers, fetchOffersNearby, toggleFavoriteStatus } from './api-actions';
+import { OfferItems, Offer } from '../types/offer';
+import { fetchOffers, fetchOffersNearby, fetchOfferById, toggleFavoriteStatus } from './api-actions';
 
 type OffersState = {
   offers: OfferItems;
   offersNearby: OfferItems;
+  currentOffer: Offer | null;
   isLoading: boolean;
   error: string | null;
 }
@@ -12,12 +13,14 @@ type OffersState = {
 const initialOffersState: OffersState = {
   offers: [],
   offersNearby: [],
+  currentOffer: null,
   isLoading: false,
   error: null,
 };
 
 export const offersReducer = createReducer(initialOffersState, (builder) => {
   builder
+    //Fetch all offers
     .addCase(fetchOffers.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -30,6 +33,8 @@ export const offersReducer = createReducer(initialOffersState, (builder) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load offers';
     })
+
+    // Fetch nearby offers
     .addCase(fetchOffersNearby.pending, (state) => {
       state.isLoading = true;
     })
@@ -41,11 +46,37 @@ export const offersReducer = createReducer(initialOffersState, (builder) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load nearby offers';
     })
+
+    // Fetch single offer by ID
+    .addCase(fetchOfferById.pending, (state) => {
+      state.isLoading = true;
+      state.currentOffer = null;
+      state.error = null;
+    })
+    .addCase(fetchOfferById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.currentOffer = action.payload;
+    })
+    .addCase(fetchOfferById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Failed to load current offer';
+    })
+
+    // Toggle favorite status
     .addCase(toggleFavoriteStatus.fulfilled, (state, action) => {
       const updatedOffer = action.payload;
-      const index = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
-      if (index !== -1) {
-        state.offers[index] = updatedOffer;
+      const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      if (offerIndex !== -1) {
+        state.offers[offerIndex] = updatedOffer;
+      }
+
+      const nearbyIndex = state.offersNearby.findIndex((offer) => offer.id === updatedOffer.id);
+      if (nearbyIndex !== -1) {
+        state.offersNearby[nearbyIndex] = updatedOffer;
+      }
+
+      if (state.currentOffer && state.currentOffer.id === updatedOffer.id) {
+        state.currentOffer = updatedOffer;
       }
     });
 });
