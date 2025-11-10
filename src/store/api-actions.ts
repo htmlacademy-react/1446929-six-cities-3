@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { OfferItems, Offer } from '../types/offer';
-import { ReviewItems } from '../types/review';
+import { ReviewItems, ReviewData, ReviewItem } from '../types/review';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { requireAuthorization, setError } from './action';
 import { saveToken, removeToken } from '../services/token';
@@ -80,6 +80,21 @@ export const fetchReviews = createAsyncThunk<ReviewItems, string, {
   }
 );
 
+export const postReview = createAsyncThunk<ReviewItem, ReviewData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'reviews/postReview',
+  async ({ offerId, comment, rating }, { extra: api }) => {
+    const { data } = await api.post<ReviewItem>(
+      `${APIRoute.Comments}/${offerId}`,
+      { comment, rating }
+    );
+    return data;
+  }
+);
+
 export const toggleFavoriteStatus = createAsyncThunk<Offer, { offerId: string; status: boolean }, {
   dispatch: AppDispatch;
   state: State;
@@ -138,3 +153,5 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
+
+

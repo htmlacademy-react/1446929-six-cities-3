@@ -50,10 +50,13 @@ function Offer(): JSX.Element | null {
     return null;
   }
 
-
   const mapOffers = [currentOffer, ...offersNearby.slice(0, 3)].filter((offer) => offer !== undefined);
 
   const city = mapOffers[0]?.city;
+
+  const limitedReviews = [...reviews]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 10);
 
   return (
     <div className="page">
@@ -154,10 +157,12 @@ function Offer(): JSX.Element | null {
                 </div>
               )}
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{limitedReviews.length}</span></h2>
 
                 {reviews && reviews.length > 0 && (
-                  <ReviewsList reviews={reviews} />
+                  <ReviewsList
+                    reviews={limitedReviews}
+                  />
                 )}
 
                 <ReviewForm />

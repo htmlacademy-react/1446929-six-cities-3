@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { ReviewItems } from '../types/review';
-import { fetchReviews } from './api-actions';
+import { fetchReviews, postReview } from './api-actions';
 
 type ReviewsState = {
   reviews: ReviewItems;
@@ -28,6 +28,18 @@ export const reviewsReducer = createReducer(initialReviewsState, (builder) => {
     .addCase(fetchReviews.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load reviews';
+    })
+    .addCase(postReview.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(postReview.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.reviews.unshift(action.payload);
+    })
+    .addCase(postReview.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message || 'Failed to post review';
     });
 });
 
