@@ -5,6 +5,7 @@ import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
 
 function Login(): JSX.Element {
 
@@ -15,10 +16,7 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isPasswordValid = (password: string): boolean => {
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
-    return passwordRegex.test(password);
-  };
+  const isPasswordValid = (password: string): boolean => PASSWORD_REGEX.test(password);
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const password = evt.target.value;
@@ -52,10 +50,7 @@ function Login(): JSX.Element {
         }
       }
     })();
-
-
   };
-
 
   return (
     <div className="page page--gray page--login">

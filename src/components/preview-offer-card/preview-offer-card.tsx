@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import { RATING_STAR_QTY } from '../../const';
+import { RATING_STAR_QTY, AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { useAppSelector } from '../../hooks';
@@ -34,7 +34,7 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           <span>Premium</span>
         </div>}
       <div className={`${view}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`/offer/${offer.id}`}>
+        <Link to={AppRoute.Offer.replace(':id', offer.id)}>
           <img
             className="place-card__image"
             src={previewImage}

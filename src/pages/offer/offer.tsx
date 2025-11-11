@@ -72,7 +72,7 @@ function Offer(): JSX.Element | null {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {currentOffer.images?.slice(0, 6).map((img) => (
+              {currentOffer.images.slice(0, 6).map((img) => (
                 <div key={img} className="offer__image-wrapper">
                   <img className="offer__image" src={img} alt="Offer view" />
                 </div>
@@ -87,11 +87,11 @@ function Offer(): JSX.Element | null {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                {currentOffer && (
-                  <h1 className="offer__name">
-                    {currentOffer.title}
-                  </h1>
-                )}
+
+                <h1 className="offer__name">
+                  {currentOffer.title}
+                </h1>
+
 
                 <FavoriteButton
                   view='offer'
@@ -101,12 +101,15 @@ function Offer(): JSX.Element | null {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${ratingToInteger / RATING_STAR_QTY * 100}%` }}></span>
+                  <span style={{
+                    width: `${ratingToInteger / RATING_STAR_QTY * 100}%`
+                  }}
+                  />
+
                   <span className="visually-hidden">Rating</span>
                 </div>
-                {currentOffer && (
-                  <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
-                )}
+
+                <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
 
               </div>
               <ul className="offer__features">
@@ -127,7 +130,7 @@ function Offer(): JSX.Element | null {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {currentOffer.goods?.map((good) => (
+                  {currentOffer.goods.map((good) => (
                     <li key={good} className="offer__inside-item">
                       {good}
                     </li>
@@ -160,7 +163,7 @@ function Offer(): JSX.Element | null {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{limitedReviews.length}</span></h2>
 
-                {reviews && reviews.length > 0 && (
+                {reviews.length > 0 && (
                   <ReviewsList
                     reviews={limitedReviews}
                   />
@@ -181,7 +184,7 @@ function Offer(): JSX.Element | null {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              {offersNearby && offersNearby.length > 0 && (
+              {offersNearby.length > 0 && (
                 <OffersList offers={offersNearby.slice(0, 3)} />
               )}
             </div>
