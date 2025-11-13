@@ -1,5 +1,8 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { toggleFavoriteStatus } from '../../store/api-actions';
+import { AuthorizationStatus, AppRoute } from '../../const';
+import { useNavigate } from 'react-router-dom';
+
 
 type FavoriteButtonProps = {
   isFavorite: boolean;
@@ -9,8 +12,15 @@ type FavoriteButtonProps = {
 
 function FavoriteButton({ isFavorite, view, offerId }: FavoriteButtonProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
+  const navigate = useNavigate();
 
   const handleClick = () => {
+
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.Login);
+      return;
+    }
     dispatch(toggleFavoriteStatus({ offerId, status: !isFavorite }));
   };
 

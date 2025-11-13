@@ -1,36 +1,16 @@
-type ErrorScreenProps = {
-  message?: string;
-};
+import { useAppSelector } from '../../hooks';
+import './error-screen.css';
 
-function ErrorScreen({ message = 'Something went wrong.' }: ErrorScreenProps): JSX.Element {
+
+function ErrorScreen(): JSX.Element | null {
+  const error = useAppSelector((state) => state.app.error);
+
   return (
     <div className="page page--gray page--main">
       <div className="error-screen">
         <h2 className="error-title">Oops!</h2>
-        <p className="error-message">{message}</p>
+        <p className="error-message">{error}</p>
       </div>
-
-      <style>{`
-        .error-screen {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          text-align: center;
-        }
-        .error-title {
-          font-size: 48px;
-          color: #c0392b;
-          margin-bottom: 12px;
-        }
-        .error-message {
-          font-size: 18px;
-          color: #333;
-          margin-bottom: 24px;
-        }
-      `}
-      </style>
     </div>
   );
 }

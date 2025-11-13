@@ -25,11 +25,7 @@ function Favorites(): JSX.Element {
   }
 
   if (error) {
-    return <ErrorScreen message={error} />;
-  }
-
-  if (favoriteOffers.length === 0) {
-    return <FavoritesEmpty />;
+    return <ErrorScreen />;
   }
 
   const favoriteOffersByCity = favoriteOffers.reduce<Record<string, Offer[]>>((acc, offer) => {
@@ -41,7 +37,6 @@ function Favorites(): JSX.Element {
     return acc;
   }, {});
 
-
   return (
     <div className="page">
       <Helmet>
@@ -52,36 +47,36 @@ function Favorites(): JSX.Element {
 
       <main className={`page__main page__main--favorites ${favoriteOffers.length === 0 && 'page__main--favorites-empty'}`}>
         <div className="page__favorites-container container">
+          {favoriteOffers.length > 0 ? (
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
 
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-
-              {Object.entries(favoriteOffersByCity).map(([city, offersByCity]) => (
-                <li key={city} className="favorites__locations-items">
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
+                {Object.entries(favoriteOffersByCity).map(([city, offersByCity]) => (
+                  <li key={city} className="favorites__locations-items">
+                    <div className="favorites__locations locations locations--current">
+                      <div className="locations__item">
+                        <a className="locations__item-link" href="#">
+                          <span>{city}</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                  <div className="favorites__places">
-                    {offersByCity.map((offer) => (
-                      <PreviewOfferCard
-                        offer={offer}
-                        view='favorites'
-                        viewWidth={150}
-                        viewHeight={110}
-                        key={offer.id}
-                      />
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-
+                    <div className="favorites__places">
+                      {offersByCity.map((offer) => (
+                        <PreviewOfferCard
+                          offer={offer}
+                          view='favorites'
+                          viewWidth={150}
+                          viewHeight={110}
+                          key={offer.id}
+                        />
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : <FavoritesEmpty />}
 
         </div>
       </main>

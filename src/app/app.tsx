@@ -1,22 +1,25 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../const';
-import { ReviewItems } from '../types/review';
 import Main from '../pages/main/main';
 import Login from '../pages/login/login';
 import Favorites from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
+import { useAppSelector } from '../hooks';
+import Spinner from '../components/spinner/spinner';
 
 
-type AppProps = {
-  authorizationStatus: AuthorizationStatus;
-  reviews: ReviewItems;
-}
+function App(): JSX.Element {
 
-function App(props: AppProps): JSX.Element {
-  const { authorizationStatus, reviews } = props;
+  const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <HelmetProvider>
@@ -27,7 +30,11 @@ function App(props: AppProps): JSX.Element {
           />
 
           <Route path={AppRoute.Login}
-            element={<Login />}
+            element={
+              authorizationStatus === AuthorizationStatus.Auth
+                ? <Navigate to={AppRoute.Main} />
+                : <Login />
+            }
           />
 
           <Route path={AppRoute.Favorites}
@@ -39,7 +46,7 @@ function App(props: AppProps): JSX.Element {
           />
 
           <Route path={AppRoute.Offer}
-            element={<Offer reviews={reviews} />}
+            element={<Offer />}
           />
 
           <Route path={AppRoute.NotFound}

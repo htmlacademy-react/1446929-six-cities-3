@@ -1,9 +1,56 @@
+import { useRef, FormEvent, useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
 
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
 
 function Login(): JSX.Element {
+
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordError, setPasswordError] = useState('');
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const isPasswordValid = (password: string): boolean => PASSWORD_REGEX.test(password);
+
+  const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const password = evt.target.value;
+    if (!isPasswordValid(password)) {
+      setPasswordError('Password must contain at least one letter, one number, and no spaces.');
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    (async () => {
+      if (loginRef.current && passwordRef.current) {
+        const email = loginRef.current.value;
+        const password = passwordRef.current.value;
+
+        if (!isPasswordValid(password)) {
+          setPasswordError('Password must contain at least one letter, one number, and no spaces.');
+          return;
+        }
+
+        setPasswordError('');
+
+        try {
+          await dispatch(loginAction({ login: email, password })).unwrap();
+          navigate(AppRoute.Main);
+        } catch (err) {
+          setPasswordError('Invalid credentials. Please check your email and password.');
+        }
+      }
+    })();
+  };
 
   return (
     <div className="page page--gray page--login">
@@ -26,23 +73,51 @@ function Login(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              className="login__form form"
+              onSubmit={handleSubmit}
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
-                <input className="login__input form__input" type="email" name="email" placeholder="Email" required />
+                <input
+                  ref={loginRef}
+                  className="login__input form__input"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  required
+                />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" required />
+                <input
+                  ref={passwordRef}
+                  className="login__input form__input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  onChange={handlePasswordChange}
+                />
+                {passwordError && (
+                  <p style={{ color: 'red', marginTop: '4px', fontSize: '12px' }}>
+                    {passwordError}
+                  </p>
+                )}
               </div>
-              <button className="login__submit form__submit button" type="submit">Sign in</button>
+              <button
+                className="login__submit form__submit button"
+                type="submit"
+              >
+                Sign in
+              </button>
             </form>
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to={AppRoute.Main}>
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

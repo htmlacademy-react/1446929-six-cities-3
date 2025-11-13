@@ -27,7 +27,7 @@ function Main(): JSX.Element {
   }
 
   if (error) {
-    return <ErrorScreen message='Unable to connect to the server. Please check your internet connection' />;
+    return <ErrorScreen />;
   }
 
   const sortedOffers = [...filteredOffers].sort((a, b) => {
