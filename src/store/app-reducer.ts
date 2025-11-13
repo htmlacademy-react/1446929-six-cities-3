@@ -1,3 +1,4 @@
+
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, setActiveOfferId, changeSortType, requireAuthorization, setError } from './action';
 import { CITIES, SortType, AuthorizationStatus } from '../const';
@@ -38,5 +39,3 @@ export const appReducer = createReducer(initialAppState, (builder) => {
       state.error = action.payload;
     });
 });
-
-
