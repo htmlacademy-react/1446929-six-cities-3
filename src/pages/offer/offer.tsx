@@ -30,20 +30,20 @@ function Offer(): JSX.Element | null {
       return;
     }
 
-    let isCancelled = false;
+    let isMounted = true;
 
     const loadOffer = async () => {
       try {
         await dispatch(fetchOfferById(id)).unwrap();
 
-        if (isCancelled) {
+        if (!isMounted) {
           return;
         }
 
         dispatch(fetchReviews(id));
         dispatch(fetchOffersNearby(id));
       } catch {
-        if (!isCancelled) {
+        if (isMounted) {
           navigate(AppRoute.NotFound);
         }
       }
@@ -52,7 +52,7 @@ function Offer(): JSX.Element | null {
     loadOffer();
 
     return () => {
-      isCancelled = true;
+      isMounted = false;
     };
   }, [id, dispatch, navigate]);
 

@@ -66,8 +66,6 @@ function Favorites(): JSX.Element {
                         <PreviewOfferCard
                           offer={offer}
                           view='favorites'
-                          viewWidth={150}
-                          viewHeight={110}
                           key={offer.id}
                         />
                       ))}

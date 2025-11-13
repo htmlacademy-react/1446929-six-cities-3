@@ -1,22 +1,21 @@
 import { Offer } from '../../types/offer';
-import { RATING_STAR_QTY, AppRoute } from '../../const';
+import { RATING_STAR_QTY, AppRoute, CARD_SIZE } from '../../const';
 import { Link } from 'react-router-dom';
 import FavoriteButton from '../favorite-button/favorite-button';
 import { useAppSelector } from '../../hooks';
 
+type CardView = keyof typeof CARD_SIZE;
 
 type PreviewOfferCardProps = {
   offer: Offer;
   onHoverIn?: () => void;
   onHoverOut?: () => void;
-  view: 'cities' | 'favorites';
-  viewWidth: number;
-  viewHeight: number;
+  view: CardView;
 }
 
 function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
 
-  const { offer, onHoverIn, onHoverOut, view, viewWidth, viewHeight } = props;
+  const { offer, onHoverIn, onHoverOut, view } = props;
 
   const updatedOffer = useAppSelector((state) =>
     state.offers.offers.find((offerItem) => offerItem.id === offer.id));
@@ -26,6 +25,8 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
   const { rating, previewImage, title, isPremium, isFavorite, price, type } = currentOffer;
 
   const ratingToInteger = Math.round(rating);
+
+  const { width, height } = CARD_SIZE[view];
 
   return (
     <article className={`${view}__card place-card`} onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
@@ -38,8 +39,8 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           <img
             className="place-card__image"
             src={previewImage}
-            width={viewWidth}
-            height={viewHeight}
+            width={width}
+            height={height}
             alt={title}
           />
         </Link>
