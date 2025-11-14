@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offer';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import PreviewOfferCard from '../../components/preview-offer-card/preview-offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
@@ -15,10 +15,14 @@ import Header from '../../components/header/header';
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
   const { favoriteOffers, isLoading, error } = useAppSelector((state) => state.favorites);
+  const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
 
   useEffect(() => {
-    dispatch(fetchFavoriteOffers());
-  }, [dispatch]);
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoriteOffers());
+    }
+
+  }, [dispatch, authorizationStatus]);
 
   if (isLoading) {
     return <Spinner />;

@@ -9,7 +9,12 @@ import PageNotFound from '../pages/page-not-found/page-not-found';
 import PrivateRoute from '../components/private-route/private-route';
 import { useAppSelector } from '../hooks';
 import Spinner from '../components/spinner/spinner';
+import { checkAuthAction } from '../store/api-actions';
+import { fetchOffers } from '../store/api-actions';
+import { store } from '../store';
 
+store.dispatch(fetchOffers());
+store.dispatch(checkAuthAction());
 
 function App(): JSX.Element {
 

@@ -1,9 +1,10 @@
 import { useRef, FormEvent, useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, CITIES } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+
 
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
 
@@ -17,6 +18,7 @@ function Login(): JSX.Element {
   const navigate = useNavigate();
 
   const isPasswordValid = (password: string): boolean => PASSWORD_REGEX.test(password);
+  const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const password = evt.target.value;
@@ -51,6 +53,7 @@ function Login(): JSX.Element {
       }
     })();
   };
+
 
   return (
     <div className="page page--gray page--login">
@@ -115,8 +118,8 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Amsterdam</span>
+              <Link className='locations__item-link tabs__item tabs__item--active' to={AppRoute.Main} >
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>
