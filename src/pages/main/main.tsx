@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 import { Helmet } from 'react-helmet-async';
@@ -13,11 +14,11 @@ import ErrorScreen from '../../components/error-screen/error-screen';
 
 
 function Main(): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const { offers, isLoading, error } = useAppSelector((state) => state.offers);
   const activeCity = useAppSelector((state) => state.app.activeCity);
   const sortType = useAppSelector((state) => state.app.sortType);
-  const activeOfferId = useAppSelector((state) => state.app.activeOfferId);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === activeCity);
   const city = filteredOffers[0]?.city ?? offers[0]?.city ?? { name: '', location: { latitude: 0, longitude: 0, zoom: 0 } };
@@ -68,6 +69,7 @@ function Main(): JSX.Element {
                 <Sort />
                 <OffersList
                   offers={sortedOffers}
+                  onOfferHover={setActiveOfferId}
                 />
               </section>
               <div className="cities__right-section">

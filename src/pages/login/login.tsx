@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, CITIES } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { changeCity } from '../../store/action';
 
 
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
@@ -52,6 +53,10 @@ function Login(): JSX.Element {
         }
       }
     })();
+  };
+
+  const handleRandomCityClick = () => {
+    dispatch(changeCity(randomCity));
   };
 
 
@@ -118,7 +123,7 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className='locations__item-link tabs__item tabs__item--active' to={AppRoute.Main} >
+              <Link className='locations__item-link tabs__item tabs__item--active' onClick={handleRandomCityClick} to={AppRoute.Main} >
                 <span>{randomCity}</span>
               </Link>
             </div>

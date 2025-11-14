@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferItems, Offer } from '../types/offer';
-import { fetchOffers, fetchOffersNearby, fetchOfferById, toggleFavoriteStatus } from './api-actions';
+import { fetchOffers, fetchOffersNearby, fetchOfferById, fetchFavoriteOffers, toggleFavoriteStatus } from './api-actions';
 
 type OffersState = {
   offers: OfferItems;
@@ -60,6 +60,13 @@ export const offersReducer = createReducer(initialOffersState, (builder) => {
     .addCase(fetchOfferById.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message || 'Failed to load current offer';
+    })
+    .addCase(fetchFavoriteOffers.fulfilled, (state, action) => {
+      const favorites = action.payload;
+      state.offers = state.offers.map((offer) => {
+        const isFavorite = favorites.some((favorite) => favorite.id === offer.id);
+        return { ...offer, isFavorite: isFavorite };
+      });
     })
 
     // Toggle favorite status

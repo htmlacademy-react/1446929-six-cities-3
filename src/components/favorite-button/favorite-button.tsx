@@ -15,6 +15,9 @@ function FavoriteButton({ isFavorite, view, offerId }: FavoriteButtonProps): JSX
   const authorizationStatus = useAppSelector((state) => state.app.authorizationStatus);
   const navigate = useNavigate();
 
+  const classPrefix = view === 'offer' ? 'offer' : 'place-card';
+  const activeClass = isFavorite ? `${classPrefix}__bookmark-button--active` : '';
+
   const handleClick = () => {
 
     if (authorizationStatus === AuthorizationStatus.NoAuth) {
@@ -24,8 +27,6 @@ function FavoriteButton({ isFavorite, view, offerId }: FavoriteButtonProps): JSX
     dispatch(toggleFavoriteStatus({ offerId, status: !isFavorite }));
   };
 
-  const classPrefix = view === 'offer' ? 'offer' : 'place-card';
-  const activeClass = isFavorite ? `${classPrefix}__bookmark-button--active` : '';
 
   return (
     <button

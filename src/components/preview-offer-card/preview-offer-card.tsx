@@ -64,7 +64,7 @@ function PreviewOfferCard(props: PreviewOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{title}</Link>
+          <Link to={AppRoute.Offer.replace(':id', offer.id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type.charAt(0).toUpperCase() + type.slice(1)}</p>
       </div>
