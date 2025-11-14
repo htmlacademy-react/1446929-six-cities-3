@@ -17,6 +17,10 @@ export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_CURRENT = './img/pin-active.svg';
 
+export const CARD_SIZE = {
+  cities: { width: 260, height: 200 },
+  favorites: { width: 150, height: 110 },
+};
 
 export enum AppRoute {
   Main = '/',

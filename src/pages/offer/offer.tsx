@@ -26,21 +26,34 @@ function Offer(): JSX.Element | null {
 
   useEffect(() => {
     if (!id) {
+      navigate(AppRoute.NotFound);
       return;
     }
 
-    const fetchData = async () => {
+    let isMounted = true;
+
+    const loadOffer = async () => {
       try {
         await dispatch(fetchOfferById(id)).unwrap();
+
+        if (!isMounted) {
+          return;
+        }
 
         dispatch(fetchReviews(id));
         dispatch(fetchOffersNearby(id));
       } catch {
-        navigate(AppRoute.NotFound);
+        if (isMounted) {
+          navigate(AppRoute.NotFound);
+        }
       }
     };
 
-    fetchData();
+    loadOffer();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id, dispatch, navigate]);
 
   if (isLoading) {

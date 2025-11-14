@@ -1,11 +1,11 @@
+
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, setActiveOfferId, changeSortType, requireAuthorization, setError } from './action';
+import { changeCity, changeSortType, requireAuthorization, setError } from './action';
 import { CITIES, SortType, AuthorizationStatus } from '../const';
 
 
 type AppState = {
   activeCity: string;
-  activeOfferId: string;
   sortType: SortType;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
@@ -13,7 +13,6 @@ type AppState = {
 
 const initialAppState: AppState = {
   activeCity: CITIES[0],
-  activeOfferId: '',
   sortType: SortType.Popular,
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null
@@ -25,9 +24,6 @@ export const appReducer = createReducer(initialAppState, (builder) => {
       state.activeCity = action.payload;
       state.sortType = SortType.Popular;
     })
-    .addCase(setActiveOfferId, (state, action) => {
-      state.activeOfferId = action.payload;
-    })
     .addCase(changeSortType, (state, action) => {
       state.sortType = action.payload;
     })
@@ -38,5 +34,3 @@ export const appReducer = createReducer(initialAppState, (builder) => {
       state.error = action.payload;
     });
 });
-
-
