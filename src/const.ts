@@ -2,7 +2,7 @@ export const RATING_STAR_QTY = 5;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
 
-export const RATING_TITLES: string[] = ['terrible', 'bad', 'not bad', 'good', 'perfect'];
+export const RATING_TITLES: string[] = ['terrible', 'badly', 'not bad', 'good', 'perfect'];
 
 export const CITIES: string[] = [
   'Paris',
@@ -20,6 +20,11 @@ export const URL_MARKER_CURRENT = './img/pin-active.svg';
 export const CARD_SIZE = {
   cities: { width: 260, height: 200 },
   favorites: { width: 150, height: 110 },
+};
+
+export const REVIEW_LENGTH = {
+  MIN: 50,
+  MAX: 300
 };
 
 export enum AppRoute {

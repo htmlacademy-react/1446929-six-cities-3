@@ -1,11 +1,9 @@
 import { useState, Fragment, FormEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
-import { RATING_STAR_QTY, RATING_TITLES } from '../../const';
+import { RATING_STAR_QTY, RATING_TITLES, REVIEW_LENGTH } from '../../const';
 import { postReview } from '../../store/api-actions';
 
-const REVIEW_MAX_LENGTH = 300;
-const REVIEW_MIN_LENGTH = 50;
 
 function ReviewForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,7 +15,7 @@ function ReviewForm(): JSX.Element {
 
   const isSubmitDisabled =
     formData.rating === 0 ||
-    formData.review.length < REVIEW_MIN_LENGTH ||
+    formData.review.length < REVIEW_LENGTH.MIN ||
     isSubmitting;
 
   const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
@@ -28,8 +26,8 @@ function ReviewForm(): JSX.Element {
         return;
       }
 
-      if (formData.review.length > REVIEW_MAX_LENGTH) {
-        setError('Review length should be maximum 300 characters.');
+      if (formData.review.length > REVIEW_LENGTH.MAX) {
+        setError(`Review length should be maximum ${REVIEW_LENGTH.MAX} characters.`);
         return;
       }
 
@@ -78,6 +76,7 @@ function ReviewForm(): JSX.Element {
                 id={`${value}-stars`}
                 type="radio"
                 checked={formData.rating === value}
+                disabled={isSubmitting}
               />
               <label
                 htmlFor={`${value}-stars`}
@@ -99,10 +98,11 @@ function ReviewForm(): JSX.Element {
         id="review"
         name="review"
         value={formData.review}
+        disabled={isSubmitting}
         onChange={(event) => {
           setFormData({ ...formData, review: event.target.value });
 
-          if (formData.review.length < REVIEW_MAX_LENGTH) {
+          if (formData.review.length < REVIEW_LENGTH.MAX) {
             setError('');
           }
         }}
@@ -114,7 +114,7 @@ function ReviewForm(): JSX.Element {
 
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{REVIEW_MIN_LENGTH} characters</b>.
+          To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{REVIEW_LENGTH.MIN} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isSubmitDisabled}>{isSubmitting ? 'Sending…' : 'Submit'}</button>
       </div>

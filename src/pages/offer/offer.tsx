@@ -174,7 +174,7 @@ function Offer(): JSX.Element | null {
                 </div>
               )}
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{limitedReviews.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
 
                 {reviews.length > 0 && (
                   <ReviewsList
