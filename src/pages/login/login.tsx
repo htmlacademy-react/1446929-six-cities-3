@@ -1,10 +1,11 @@
-import { useRef, FormEvent, useState, ChangeEvent } from 'react';
+import { useRef, useMemo, FormEvent, useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, CITIES } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { changeCity } from '../../store/action';
+import './login.css';
 
 
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[^\s]+$/;
@@ -19,7 +20,12 @@ function Login(): JSX.Element {
   const navigate = useNavigate();
 
   const isPasswordValid = (password: string): boolean => PASSWORD_REGEX.test(password);
-  const randomCity = CITIES[Math.floor(Math.random() * CITIES.length)];
+
+  const randomCity = useMemo(() => {
+    const cities = CITIES;
+    const randomIndex = Math.floor(Math.random() * cities.length);
+    return cities[randomIndex];
+  }, []);
 
   const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const password = evt.target.value;
@@ -108,7 +114,7 @@ function Login(): JSX.Element {
                   onChange={handlePasswordChange}
                 />
                 {passwordError && (
-                  <p style={{ color: 'red', marginTop: '4px', fontSize: '12px' }}>
+                  <p className='error-text'>
                     {passwordError}
                   </p>
                 )}

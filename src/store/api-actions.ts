@@ -152,5 +152,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     await api.delete(APIRoute.Logout);
     removeToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(fetchOffers());
   },
 );

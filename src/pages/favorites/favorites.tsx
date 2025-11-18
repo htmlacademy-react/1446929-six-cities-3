@@ -42,7 +42,7 @@ function Favorites(): JSX.Element {
   }, {});
 
   return (
-    <div className="page">
+    <div className={`page ${favoriteOffers.length === 0 && 'page--favorites-empty'}`}>
       <Helmet>
         <title>6 cities - Saved Favorites</title>
       </Helmet>
